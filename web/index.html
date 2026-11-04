@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>کنترل از راه دور | بدون نصب روی دستگاه هدف</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="38" height="38">
+          <rect x="5" y="9" width="30" height="21" rx="3" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <path d="M12 36h16M20 30v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M31 30c4 0 7 3 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M31 35c1.6 0 3 1.3 3 3" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="31" cy="41" r="1.8" fill="currentColor"/>
+        </svg>
+      </div>
+      <div>
+        <h1>کنترل از راه دور</h1>
+        <p>بدون نصب هیچ برنامه‌ای روی دستگاه هدف</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="server-pill" id="server-pill" title="وضعیت سرور">
+        <span class="dot on" id="server-dot"></span>
+        <span id="server-text">سرور محلی</span>
+      </div>
+      <button class="btn ghost" id="btn-logs-top" type="button">گزارش فعالیت</button>
+      <button class="btn primary" id="btn-add-target" type="button">
+        <span class="plus">+</span> افزودن دستگاه
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-head">
+        <h2>دستگاه‌ها</h2>
+        <span class="count" id="target-count">0</span>
+      </div>
+      <div class="device-list" id="target-list"></div>
+      <div class="side-note">
+        <strong>بدون نصب روی هدف</strong>
+        <p>فقط سرویس دسترسی از راه دور داخلی ویندوز (WinRM/OpenSSH) یا اندروید (ADB) را یک‌بار فعال کنید. هیچ فایلی روی دستگاه هدف کپی نمی‌شود.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="empty-state" class="empty-state">
+        <div class="empty-art" aria-hidden="true">
+          <svg viewBox="0 0 320 180" width="100%" height="100%">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#22d3a5" stop-opacity=".9"/>
+                <stop offset="1" stop-color="#38bdf8" stop-opacity=".55"/>
+              </linearGradient>
+            </defs>
+            <rect x="34" y="34" width="170" height="108" rx="10" fill="#0f1830" stroke="#2a3a5f" stroke-width="2"/>
+            <rect x="46" y="46" width="146" height="76" rx="5" fill="#0a1224" stroke="#1d2b47" stroke-width="1.5"/>
+            <path d="M60 64h44M60 76h70M60 88h54M60 100h30" stroke="url(#g1)" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+            <rect x="206" y="62" width="58" height="96" rx="10" fill="#0f1830" stroke="#2a3a5f" stroke-width="2"/>
+            <rect x="214" y="74" width="42" height="66" rx="4" fill="#0a1224" stroke="#1d2b47" stroke-width="1.5"/>
+            <circle cx="235" cy="149" r="4" fill="#22d3a5" opacity=".8"/>
+            <path d="M150 22c14-12 34-12 48 0" fill="none" stroke="#22d3a5" stroke-width="3" stroke-linecap="round" opacity=".65"/>
+            <path d="M160 34c8-7 20-7 28 0" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+            <circle cx="174" cy="46" r="3.4" fill="#22d3a5"/>
+            <path d="M96 142h46M119 142v14" stroke="#2a3a5f" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2>هنوز دستگاهی اضافه نشده است</h2>
+        <p>کافی است سرویس دسترسی از راه دور داخلی دستگاه هدف را یک‌بار فعال کنید؛ سپس آدرس و مشخصات ورود را اینجا وارد کنید. هیچ برنامه‌ای روی دستگاه هدف نصب یا کپی نمی‌شود.</p>
+        <div class="empty-actions">
+          <button class="btn primary lg" id="btn-add-target-empty" type="button">افزودن دستگاه</button>
+          <button class="btn ghost lg" id="btn-discover-empty" type="button">جستجوی خودکار در شبکه</button>
+        </div>
+        <div class="empty-types">
+          <div class="empty-type">
+            <span>🪟</span>
+            <strong>ویندوز — WinRM</strong>
+            <small>سرویس داخلی ویندوز؛ مناسب اکثر نسخه‌ها</small>
+          </div>
+          <div class="empty-type">
+            <span>🔐</span>
+            <strong>ویندوز/لینوکس — SSH</strong>
+            <small>OpenSSH داخلی؛ جایگزین امن</small>
+          </div>
+          <div class="empty-type">
+            <span>🤖</span>
+            <strong>اندروید — ADB</strong>
+            <small>Wireless debugging؛ بدون اپلیکیشن</small>
+          </div>
+        </div>
+      </section>
+
+      <section id="device-view" class="device-view hidden">
+        <div class="device-head">
+          <div class="device-title">
+            <span class="dot off" id="status-dot"></span>
+            <h2 id="dev-hostname">—</h2>
+            <span class="tag" id="dev-kind">—</span>
+            <span class="tag muted" id="dev-platform">—</span>
+            <span class="tag muted" id="dev-status">—</span>
+          </div>
+          <div class="device-meta" id="dev-meta"></div>
+          <div class="device-actions">
+            <button class="btn ghost" id="btn-test-target" type="button">تست اتصال</button>
+            <button class="btn danger-ghost" id="btn-remove-target" type="button">حذف</button>
+          </div>
+        </div>
+
+        <nav class="tabs" id="tabs">
+          <button class="tab active" data-tab="terminal" type="button">ترمینال</button>
+          <button class="tab" data-tab="files" type="button">فایل‌ها</button>
+          <button class="tab" data-tab="screen" type="button">صفحه نمایش</button>
+          <button class="tab" data-tab="clipboard" type="button">کلیپ‌بورد</button>
+          <button class="tab hidden" id="tab-android" data-tab="android" type="button">اندروید</button>
+          <button class="tab" data-tab="power" type="button">قدرت</button>
+          <button class="tab" data-tab="logs" type="button">گزارش‌ها</button>
+        </nav>
+
+        <div class="tab-panel" id="panel-terminal">
+          <div class="quick-row" id="quick-row"></div>
+          <div class="terminal">
+            <div class="term-output" id="term-output">
+              <div class="term-hint">
+                <p>دستور مورد نظر را بنویسید و Enter بزنید.</p>
+                <p class="muted">دستور مستقیماً روی دستگاه هدف اجرا می‌شود.</p>
+              </div>
+            </div>
+            <form class="term-input-row" id="term-form" autocomplete="off">
+              <span class="prompt" id="term-prompt">PS&gt;</span>
+              <input id="term-input" type="text" spellcheck="false" placeholder="مثلاً: whoami" aria-label="دستور">
+              <button class="btn primary" type="submit">اجرا</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-files">
+          <div class="path-row">
+            <input id="file-path" type="text" spellcheck="false" placeholder="مسیر پوشه">
+            <button class="btn ghost" id="btn-list-dir" type="button">فهرست</button>
+            <button class="btn ghost" id="btn-upload" type="button">آپلود فایل</button>
+            <input id="file-input" type="file" hidden>
+          </div>
+          <div class="file-list" id="file-list">
+            <div class="placeholder">یک مسیر وارد کنید و «فهرست» را بزنید.</div>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-screen">
+          <div class="screen-toolbar">
+            <button class="btn primary" id="btn-shot" type="button">گرفتن تصویر از صفحه</button>
+            <label class="check"><input type="checkbox" id="auto-shot"> به‌روزرسانی خودکار</label>
+            <span class="muted small" id="shot-info"></span>
+          </div>
+          <div class="screen-frame" id="screen-frame">
+            <div class="placeholder" id="screen-placeholder">هنوز تصویری گرفته نشده است.</div>
+            <img id="screen-img" alt="تصویر صفحه دستگاه" class="hidden">
+          </div>
+          <div class="gallery" id="gallery"></div>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-clipboard">
+          <div class="clip-card">
+            <div class="clip-head">
+              <h3>خواندن کلیپ‌بورد</h3>
+              <button class="btn ghost" id="btn-clip-get" type="button">خواندن</button>
+            </div>
+            <pre class="clip-out" id="clip-out">—</pre>
+          </div>
+          <div class="clip-card">
+            <div class="clip-head">
+              <h3>نوشتن در کلیپ‌بورد</h3>
+              <button class="btn primary" id="btn-clip-set" type="button">نوشتن</button>
+            </div>
+            <textarea id="clip-in" rows="5" placeholder="متنی که می‌خواهید در کلیپ‌بورد دستگاه کپی شود…"></textarea>
+          </div>
+          <p class="muted small" id="clip-note"></p>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-android">
+          <div class="android-note">
+            <strong>اندروید (ADB بی‌سیم)</strong>
+            <p>روی گوشی: Developer options → Wireless debugging را فعال کنید. سپس با <code>adb pair</code> جفت کنید و با <code>adb connect</code> وصل شوید. هیچ اپلیکیشنی روی گوشی نصب نمی‌شود.</p>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <h3>لمس / کلیک</h3>
+              <div class="inline-form">
+                <input id="tap-x" type="number" placeholder="X" min="0">
+                <input id="tap-y" type="number" placeholder="Y" min="0">
+                <button class="btn primary" id="btn-tap" type="button">لمس</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>کشیدن (Swipe)</h3>
+              <div class="inline-form">
+                <input id="sw-x1" type="number" placeholder="X1" min="0">
+                <input id="sw-y1" type="number" placeholder="Y1" min="0">
+                <input id="sw-x2" type="number" placeholder="X2" min="0">
+                <input id="sw-y2" type="number" placeholder="Y2" min="0">
+                <button class="btn primary" id="btn-swipe" type="button">کشیدن</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>تایپ متن</h3>
+              <div class="inline-form">
+                <input id="android-text" type="text" placeholder="متن">
+                <button class="btn primary" id="btn-android-text" type="button">ارسال</button>
+              </div>
+            </div>
+            <div class="card">
+              <h3>اپلیکیشن‌ها</h3>
+              <div class="inline-form">
+                <input id="app-pkg" type="text" placeholder="package.name">
+                <button class="btn ghost" id="btn-list-apps" type="button">فهرست</button>
+                <button class="btn primary" id="btn-launch-app" type="button">باز کردن</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-power">
+          <div class="power-note">
+            این عملیات‌ها بلافاصله روی دستگاه هدف انجام می‌شوند و نیاز به تأیید دارند.
+          </div>
+          <div class="grid-4">
+            <button class="power-btn" data-power="lock" type="button">
+              <span class="p-icon">🔒</span><strong>قفل کردن</strong><small>قفل صفحه نمایش</small>
+            </button>
+            <button class="power-btn" data-power="sleep" type="button">
+              <span class="p-icon">🌙</span><strong>خواب</strong><small>حالت تعلیق</small>
+            </button>
+            <button class="power-btn" data-power="restart" type="button">
+              <span class="p-icon">🔄</span><strong>ریست</strong><small>راه‌اندازی مجدد</small>
+            </button>
+            <button class="power-btn danger" data-power="shutdown" type="button">
+              <span class="p-icon">⏻</span><strong>خاموش کردن</strong><small>قطع برق نرم</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="tab-panel hidden" id="panel-logs">
+          <div class="logs-head">
+            <h3>گزارش فعالیت</h3>
+            <button class="btn ghost" id="btn-refresh-logs" type="button">به‌روزرسانی</button>
+          </div>
+          <div class="log-list" id="log-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- add target modal -->
+  <div class="modal hidden" id="target-modal" role="dialog" aria-modal="true" aria-labelledby="target-title">
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <h2 id="target-title">افزودن دستگاه</h2>
+        <button class="icon-btn" data-close="target-modal" type="button" aria-label="بستن">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="muted">نوع دسترسی را انتخاب کنید. هیچ برنامه‌ای روی دستگاه هدف نصب نمی‌شود؛ فقط سرویس داخلی آن را یک‌بار فعال کنید.</p>
+
+        <div class="type-grid" id="type-grid">
+          <button class="type-card active" data-kind="winrm" type="button">
+            <span class="type-icon">🪟</span>
+            <strong>ویندوز (WinRM)</strong>
+            <small>سرویس داخلی ویندوز</small>
+          </button>
+          <button class="type-card" data-kind="ssh" type="button">
+            <span class="type-icon">🔐</span>
+            <strong>ویندوز/لینوکس (SSH)</strong>
+            <small>OpenSSH داخلی</small>
+          </button>
+          <button class="type-card" data-kind="adb" type="button">
+            <span class="type-icon">🤖</span>
+            <strong>اندروید (ADB)</strong>
+            <small>Wireless debugging</small>
+          </button>
+        </div>
+
+        <div class="discover-bar">
+          <button class="btn ghost" id="btn-discover" type="button">جستجوی خودکار در شبکه</button>
+          <span class="muted small" id="discover-status">بدون نیاز به تایپ IP؛ دستگاه‌های دارای WinRM/SSH/ADB را پیدا می‌کند.</span>
+        </div>
+        <div class="discover-results hidden" id="discover-results"></div>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>نام نمایشی</span>
+            <input id="t-name" type="text" placeholder="مثلاً: کامپیوتر اتاق">
+          </label>
+          <label class="field">
+            <span id="t-host-label">آدرس / IP</span>
+            <input id="t-host" type="text" placeholder="192.168.1.50" spellcheck="false">
+          </label>
+          <label class="field" id="port-field">
+            <span>پورت</span>
+            <input id="t-port" type="number" placeholder="5985">
+          </label>
+          <label class="field" id="username-field">
+            <span>نام کاربری</span>
+            <input id="t-username" type="text" placeholder="Administrator" autocomplete="off">
+          </label>
+          <label class="field" id="password-field">
+            <span>رمز عبور</span>
+            <input id="t-password" type="password" placeholder="••••••••" autocomplete="new-password">
+          </label>
+          <label class="field" id="domain-field">
+            <span>دامنه (اختیاری)</span>
+            <input id="t-domain" type="text" placeholder="WORKGROUP" autocomplete="off">
+          </label>
+          <label class="field" id="key-field">
+            <span>فایل کلید SSH (مسیر روی این کامپیوتر)</span>
+            <input id="t-key" type="text" placeholder="C:\keys\id_ed25519" spellcheck="false">
+          </label>
+          <label class="field" id="platform-field">
+            <span>سیستم‌عامل (SSH)</span>
+            <select id="t-platform">
+              <option value="windows">ویندوز</option>
+              <option value="linux">لینوکس</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="check-row" id="winrm-checks">
+          <label class="check"><input type="checkbox" id="t-https"> HTTPS (پورت 5986)</label>
+          <label class="check"><input type="checkbox" id="t-insecure"> نادیده گرفتن گواهی TLS</label>
+        </div>
+
+        <div id="adb-fields" class="hidden">
+          <div class="form-grid">
+            <label class="field">
+              <span>آدرس جفت‌سازی (IP:port)</span>
+              <input id="t-pair-address" type="text" placeholder="192.168.1.50:37123" spellcheck="false">
+            </label>
+            <label class="field">
+              <span>کد جفت‌سازی (۶ رقم)</span>
+              <input id="t-pair-code" type="text" placeholder="123456" inputmode="numeric">
+            </label>
+          </div>
+          <button class="btn ghost" id="btn-adb-pair" type="button">جفت‌سازی با کد</button>
+          <p class="muted small">آدرس جفت‌سازی و آدرس اتصال معمولاً متفاوت هستند. هر دو را در صفحه‌ی Wireless debugging گوشی می‌بینید.</p>
+        </div>
+
+        <div class="test-result hidden" id="test-result"></div>
+        <div class="setup-help" id="setup-help"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn ghost" data-close="target-modal" type="button">انصراف</button>
+        <button class="btn ghost" id="btn-test-new-target" type="button">تست اتصال</button>
+        <button class="btn primary" id="btn-save-target" type="button">ذخیره</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- confirm modal -->
+  <div class="modal hidden" id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-card small">
+      <div class="modal-head">
+        <h2 id="confirm-title">تأیید عملیات</h2>
+        <button class="icon-btn" data-close="confirm-modal" type="button" aria-label="بستن">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message">آیا مطمئن هستید؟</p>
+        <pre class="code-block" id="confirm-command"></pre>
+      </div>
+      <div class="modal-foot">
+        <button class="btn ghost" data-close="confirm-modal" type="button">انصراف</button>
+        <button class="btn danger" id="confirm-ok" type="button">تأیید و اجرا</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- logs modal -->
+  <div class="modal hidden" id="logs-modal" role="dialog" aria-modal="true" aria-labelledby="logs-title">
+    <div class="modal-card wide">
+      <div class="modal-head">
+        <h2 id="logs-title">گزارش فعالیت سرور</h2>
+        <button class="icon-btn" data-close="logs-modal" type="button" aria-label="بستن">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="log-list" id="global-log-list"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn ghost" id="btn-refresh-global-logs" type="button">به‌روزرسانی</button>
+        <button class="btn primary" data-close="logs-modal" type="button">بستن</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+  <noscript><p style="padding:20px">این پنل به جاوااسکریپت نیاز دارد.</p></noscript>
+  <script src="app.js"></script>
+</body>
+</html>
