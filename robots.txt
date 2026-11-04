@@ -1,0 +1,5 @@
+
+User-agent: *
+Allow: /
+
+Sitemap: https://pooria683.github.io/Hack/sitemap.xml
