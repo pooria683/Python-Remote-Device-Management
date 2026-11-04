@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Hack - Python Remote Device Management Tool</title>
+
+  <meta name="description"
+    content="Hack is a Python-based remote device management project. Explore its features, documentation, source code and latest releases on GitHub.">
+
+  <meta name="keywords"
+    content="Python, Remote Device Management, Android, Windows, Flask, GitHub, Hack">
+
+  <meta name="author" content="Pooria">
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical"
+    href="https://pooria683.github.io/Hack/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+    content="Hack - Remote Device Management">
+  <meta property="og:description"
+    content="Explore Hack, its features, source code and releases.">
+  <meta property="og:url"
+    content="https://pooria683.github.io/Hack/">
+
+  <meta name="theme-color" content="#080b12">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080b12;
+      color: #f1f5f9;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid #202938;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #60a5fa;
+    }
+
+    nav a {
+      color: #aab6c8;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 110px 0 90px;
+    }
+
+    .tag {
+      display: inline-block;
+      color: #60a5fa;
+      background: #14243c;
+      border: 1px solid #23436e;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 1.15;
+      margin-bottom: 25px;
+    }
+
+    h1 span {
+      color: #60a5fa;
+    }
+
+    .hero p {
+      color: #9ca9bc;
+      max-width: 650px;
+      margin: auto;
+      font-size: 17px;
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 13px 25px;
+      border-radius: 9px;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .secondary {
+      border: 1px solid #354258;
+      color: #dbeafe;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      opacity: .85;
+    }
+
+    section {
+      padding: 65px 0;
+    }
+
+    .section-title {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .section-description {
+      color: #9ca9bc;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #101722;
+      border: 1px solid #253247;
+      border-radius: 13px;
+      padding: 25px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #93c5fd;
+    }
+
+    .card p {
+      color: #9ca9bc;
+      font-size: 14px;
+    }
+
+    .about {
+      background: #0e1420;
+      border-top: 1px solid #202938;
+      border-bottom: 1px solid #202938;
+    }
+
+    .github-box {
+      text-align: center;
+      background: #101722;
+      border: 1px solid #253247;
+      border-radius: 16px;
+      padding: 45px 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: #758398;
+      font-size: 13px;
+    }
+
+    @media(max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+
+      nav a {
+        margin: 0 8px;
+      }
+
+      .hero {
+        padding: 75px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <a class="logo" href="#">HACK.</a>
+
+      <div>
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#github">GitHub</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+
+      <span class="tag">Open Source Project</span>
+
+      <h1>
+        Meet <span>Hack.</span><br>
+        Remote Device Management
+      </h1>
+
+      <p>
+        Explore a Python-based project for managing
+        authorized devices. Discover its features,
+        source code and latest releases.
+      </p>
+
+      <div class="buttons">
+        <a class="btn primary"
+           href="https://github.com/pooria683/Hack">
+          View on GitHub
+        </a>
+
+        <a class="btn secondary"
+           href="https://github.com/pooria683/Hack/releases">
+          Download Releases
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="container">
+
+      <h2 class="section-title">About Hack</h2>
+
+      <p class="section-description">
+        Hack is an open-source software project.
+        Its goal is to provide tools for authorized
+        device management and administration.
+      </p>
+
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container">
+
+      <h2 class="section-title">Project Overview</h2>
+
+      <p class="section-description">
+        Explore the project and its development resources.
+      </p>
+
+      <div class="grid">
+
+        <article class="card">
+          <h3>Python Based</h3>
+          <p>
+            Built around Python and its software ecosystem.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Device Management</h3>
+          <p>
+            Designed for authorized device administration.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Open Source</h3>
+          <p>
+            Explore the source code and contribute on GitHub.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="github">
+    <div class="container">
+
+      <div class="github-box">
+        <h2 class="section-title">Explore Hack</h2>
+
+        <p class="section-description">
+          Check the source code, documentation
+          and latest project releases.
+        </p>
+
+        <a class="btn primary"
+           href="https://github.com/pooria683/Hack">
+          Open GitHub Repository
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 Pooria. Hack Project.
+    <br>
+    Built with HTML and CSS.
+  </div>
+</footer>
+
+</body>
+</html>
