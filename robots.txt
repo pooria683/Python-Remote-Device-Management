@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pooria683.github.io/Hack/sitemap.xml
+Sitemap: https://pooria683.github.io/Python-Remote-Device-Management/sitemap.xml
